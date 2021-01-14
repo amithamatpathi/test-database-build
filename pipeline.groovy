@@ -16,18 +16,16 @@ pipeline {
     }
 
     stages {
-        stage('
-          Build ') {
+        stage('Build ') {
             steps {
                 // Setup the database
                 script {
-                    withCredentials([string(credentialsId: '
-          jenkins - database - username ', variable: '
-          DATABASE_USERNAME ')]) {
-                        withCredentials([string(credentialsId: '
-          jenkins - database - password ', variable: '
-          DATABASE_PASSWORD ')]) {
-                            def test_database_credentials = buildTestMySQLDatabase {
+                    withCredentials([string(credentialsId: 'jenkins - database - username ', variable: 'DATABASE_USERNAME ')]) 
+                  {
+                        withCredentials([string(credentialsId: 'jenkins - database - password ', variable: 'DATABASE_PASSWORD ')]) 
+                    {
+                            def test_database_credentials = buildTestMySQLDatabase
+                      {
                                 dbUser = env.DATABASE_USERNAME
                                 dbPass = env.DATABASE_PASSWORD
                             }
@@ -44,17 +42,10 @@ pipeline {
         }
     }
 }
-
-
-pipeline {
-  agent any
-  stages {
-    stage('
-          Slack Message ') {
+    stage('Send Notification Message ') {
       steps {
-        slackSend channel: '#jenkins ',
-            color: '
-          good ',
+        Communicationchannel: '#jenkins', //comes with name of jenkins
+            color: 'good ',
             message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}"
       }
     }
